@@ -1,0 +1,12 @@
+{
+	"1": {
+		"name": "Ethereum Mainnet",
+		"url": "https://api.etherscan.io/api",
+		"apikey": "SBPV1CVRWU8ST415KNAHSYNFCF9N82UH1H"
+	},
+	"43114": {
+		"name": "Avalanche C-Chain",
+		"url": "https://api.snowtrace.io/api",
+		"apikey": "CF15YPHM49PCYN6FI8IH5KYB5V5WG1EM53"
+	}
+}
