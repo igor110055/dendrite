@@ -56,7 +56,7 @@
     "prettier": "2.6.2"
   },
   "lint-staged": {
-    "*.{js,css,md}": [
+    "*.{js,ts,css,md}": [
       "eslint --fix --max-warnings=0",
       "prettier --write"
     ]
