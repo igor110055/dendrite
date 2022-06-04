@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
 import {
   Button,
   ChakraProvider,
@@ -9,6 +9,7 @@ import {
   FormControl,
   FormLabel,
   VStack,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 
 function App() {
@@ -24,20 +25,27 @@ function App() {
             }, 400);
           }}
         >
-          {({ values, isSubmitting, handleChange, handleSubmit }) => (
+          {({ isSubmitting, errors, handleSubmit, touched }) => (
             <form onSubmit={handleSubmit}>
               <VStack spacing={4} align="flex-start">
-                <FormControl>
+                <FormControl isInvalid={!!errors.hash && touched.hash}>
                   <FormLabel htmlFor="hash">Transaction Hash</FormLabel>
-                  <Input
+                  <Field
+                    as={Input}
+                    id="hash"
                     name="hash"
                     placeholder="Hash"
-                    type="text"
                     size="lg"
                     isDisabled={isSubmitting}
-                    onChange={handleChange}
-                    value={values.hash}
+                    validate={(value: string) => {
+                      let error;
+                      if (!/^0x([A-Fa-f0-9]{64})$/.test(value)) {
+                        error = "Invalid transaction hash";
+                      }
+                      return error;
+                    }}
                   />
+                  <FormErrorMessage>{errors.hash}</FormErrorMessage>
                 </FormControl>
                 <Button type="submit" disabled={isSubmitting}>
                   Submit
