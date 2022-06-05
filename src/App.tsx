@@ -36,6 +36,8 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
+import { ReactComponent as DendriteSvg } from "./dendrite.svg";
+
 const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -195,7 +197,10 @@ function App() {
   return (
     <Container mt={20} maxW="container.md">
       <Center mb={10}>
-        <Heading size="4xl">Dendrite</Heading>
+        <DendriteSvg />
+        <Heading ml={3} size="4xl">
+          Dendrite
+        </Heading>
       </Center>
       <Formik initialValues={{ hash: "" }} onSubmit={onSubmit}>
         {({ isSubmitting, errors, handleSubmit, touched }) => (
