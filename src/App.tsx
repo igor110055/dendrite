@@ -51,6 +51,8 @@ const makeTable = (arr: any, onSubmit: any) => {
             <Th>From</Th>
             <Th>Source Chain</Th>
             <Th>Target Chain</Th>
+            <Th>Source Native Coin</Th>
+            <Th>Target Native Coin</Th>
             <Th>Date</Th>
           </Tr>
         </Thead>
@@ -66,6 +68,8 @@ const makeTable = (arr: any, onSubmit: any) => {
                 <Td>{item.from.slice(0, 10)}...</Td>
                 <Td>{item.sourceChain}</Td>
                 <Td>{item.targetChain}</Td>
+                <Td>{item.nativeCurrency}</Td>
+                <Td>{item.targetCurrency}</Td>
                 <Td>{item.date}</Td>
               </Tr>
             ))
@@ -140,6 +144,13 @@ const getTxs = async (startIndex: number, endIndex: number) => {
       const sourceChain = chains.find(
         (x) => x.chainId === parseInt(fromChainId)
       );
+
+      const targetChain = chains.find((x) => x.chainId === parseInt(toChainId));
+
+      console.log(sourceChain, targetChain);
+
+      const nativeCurrency = sourceChain?.nativeCurrency.symbol;
+      const targetCurrency = targetChain?.nativeCurrency.symbol;
       // const abiEncoding = x.data;
       // const typesArrayTokenDeposit = ["uint256", "address", "uint256"]; // chainId, token, amount
 
@@ -158,10 +169,11 @@ const getTxs = async (startIndex: number, endIndex: number) => {
       const arr = {
         sourceHash: txHash,
         sourceChain: sourceChain?.name,
-        targetChain: chains.find((x) => x.chainId === parseInt(toChainId))
-          ?.name,
+        targetChain: targetChain?.name,
         from: from,
         date: date,
+        nativeCurrency: nativeCurrency,
+        targetCurrency: targetCurrency,
       };
       return arr;
     })
