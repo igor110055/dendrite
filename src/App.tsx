@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Field, Formik } from "formik";
 import {
+  Heading,
   Button,
   ChakraProvider,
   Container,
@@ -10,6 +11,7 @@ import {
   FormLabel,
   VStack,
   FormErrorMessage,
+  Center,
 } from "@chakra-ui/react";
 
 import { Bridge, supportedChainIds } from "@synapseprotocol/sdk";
@@ -55,7 +57,6 @@ function App() {
     });
     // wait for the requests to complete
     const res = await Promise.all(req);
-    console.log("res", res);
     // post processing
     const data = res.map((x) => x.data.result);
     console.log("data", data);
@@ -66,7 +67,10 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Container mt={20}>
+      <Container mt={20} maxW="container.md">
+        <Center mb={10}>
+          <Heading size="4xl">Dendrite</Heading>
+        </Center>
         <Formik initialValues={{ hash: "" }} onSubmit={onSubmit}>
           {({ isSubmitting, errors, handleSubmit, touched }) => (
             <form onSubmit={handleSubmit}>
