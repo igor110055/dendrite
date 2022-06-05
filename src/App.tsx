@@ -11,6 +11,7 @@ import {
   VStack,
   FormErrorMessage,
   Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -66,16 +67,12 @@ const makeTable = (arr: any, onSubmit: any) => {
             ))
           }
         </Tbody>
-        {/* {arr.map(x) => (
-          <React.Fragment key={key}>
-            <ListItem className="tableListItem">
-              <span className="label">{key}</span>
-              <span className="value">{val}</span>
-            </ListItem>
-            <Divider />
-          </React.Fragment>
-        ))} */}
       </Table>
+      {arr.length == 0 && (
+        <Center mt={10}>
+          <Spinner />
+        </Center>
+      )}
     </TableContainer>
   );
 };

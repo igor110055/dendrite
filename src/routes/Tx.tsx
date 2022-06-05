@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   Spinner,
+  Heading,
 } from "@chakra-ui/react";
 
 import { id as makeKappa } from "@ethersproject/hash";
@@ -142,7 +143,7 @@ function Tx() {
   }, []);
   return (
     <Container mt={20} maxW="container.md">
-      <p>This is the tx page</p>
+      <Heading>Transaction</Heading>
       <Box mt={20}>{data ? makeTable(data) : <Spinner />}</Box>
       <Button color="primary" onClick={() => navigate("/")} mt={10}>
         Go back
