@@ -11,6 +11,18 @@
 		"url": "https://api.polygonscan.com/api",
 		"apikey": "AYNMI2A6KIY1GE8VGZTWS8261YT17E4MFN"
 	},
+	"1284": {
+		"name": "Moonbeam",
+		"humanUrl": "https://moonbeam.moonscan.io",
+		"url": "https://api-moonbeam.moonscan.io/api",
+		"apikey": "GR8WF2MQPG2KJFCX1MET3TRY85WF131E8D"
+	},
+	"1285": {
+		"name": "Moonriver",
+		"humanUrl": "https://moonriver.moonscan.io",
+		"url": "https://api-moonriver.moonscan.io/api",
+		"apikey":"MWGRWUXUTKXNH6GPD54AFCVFNVZP1PH9YR"
+	},
 	"43114": {
 		"name": "Avalanche C-Chain",
 		"humanUrl": "https://snowtrace.io",

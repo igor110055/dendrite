@@ -165,6 +165,20 @@ function Tx() {
         ["Target Chain", Bridges[toChainId].name],
         ["From", from],
         ["To", to],
+        [
+          "Source Token",
+          <Link
+            href={
+              Bridges[fromChainId].humanUrl +
+              "/address/" +
+              fromChainTx.args.token
+            }
+            key={hash}
+            isExternal
+          >
+            {fromChainTx.args.token}
+          </Link>,
+        ],
         ["Status", toChainTx ? "Success" : "Pending"],
       ];
       setData(arr);
