@@ -209,10 +209,6 @@ function App() {
     delayGetTxs();
   }, []);
 
-  useEffect(() => {
-    // console.log("txs", txs);
-  });
-
   return (
     <Container mt={20} maxW="container.md">
       <Center mb={10}>
