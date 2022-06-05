@@ -12,7 +12,14 @@ import {
   VStack,
   FormErrorMessage,
   Center,
+  Divider,
+  UnorderedList,
+  ListItem,
 } from "@chakra-ui/react";
+
+// import { useNavigate } from "react-router-dom";
+
+import "./App.css";
 
 import { Bridge, supportedChainIds } from "@synapseprotocol/sdk";
 import { id as makeKappa } from "@ethersproject/hash";
@@ -22,6 +29,7 @@ import axios from "axios";
 
 function App() {
   const [success, setSuccess] = React.useState<boolean | undefined>(undefined);
+  // const navigate = useNavigate();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Bridges: any = {};
@@ -37,10 +45,10 @@ function App() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = async (values: any, { setSubmitting }: any) => {
     setSubmitting(false);
-    const hash = values.hash;
-    const kappa = makeKappa(hash);
+    // navigate(`/tx/${values.hash}`);
+    const kappa = makeKappa(values.hash);
 
-    // set up the requests
+    // Set up the requests
     const req = Object.keys(Bridges).map((chainId: string) => {
       const { bridgeAddress: address } = Bridges[chainId];
       const { url, apikey } = apis[chainId as keyof typeof apis];
@@ -64,6 +72,31 @@ function App() {
     setSuccess(data.some((x) => x.length > 0));
   };
   console.log("success", success);
+
+  const makeTable = () => {
+    // const tableValues = [
+    //   "Source Hash",
+    //   "Dest Hash",
+    //   "Source Chain",
+    //   "Dest Chain",
+    //   "From",
+    //   "To",
+    //   "Date",
+    //   "CoinType",
+    //   "Send Value",
+    //   "Receive Value",
+    //   "Status",
+    // ];
+    return (
+      <UnorderedList mt={10}>
+        <ListItem className="tableListItem">
+          <span className="label">Source Hash</span>
+          <span className="value">0xfff12123</span>
+        </ListItem>
+        <Divider />
+      </UnorderedList>
+    );
+  };
 
   return (
     <ChakraProvider>
@@ -102,6 +135,7 @@ function App() {
           )}
         </Formik>
         <p>{success?.toString()}</p>
+        {makeTable()}
       </Container>
     </ChakraProvider>
   );

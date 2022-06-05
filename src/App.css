@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.tableListItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.label {
+  font-weight: bold;
+  min-width: 7.5 rem;
+  width: 30%;
+} */

@@ -1,5 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+// import { id as makeKappa } from "@ethersproject/hash";
+// import axios from "axios";
 
 function Tx() {
   const { hash } = useParams();
