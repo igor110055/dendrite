@@ -4,7 +4,6 @@ import { Field, Formik } from "formik";
 import {
   Heading,
   Button,
-  ChakraProvider,
   Container,
   Input,
   FormControl,
@@ -12,132 +11,56 @@ import {
   VStack,
   FormErrorMessage,
   Center,
-  Divider,
-  UnorderedList,
-  ListItem,
 } from "@chakra-ui/react";
-
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./App.css";
 
-import { Bridge, supportedChainIds } from "@synapseprotocol/sdk";
-import { id as makeKappa } from "@ethersproject/hash";
-
-import apis from "./constants/apis.json";
-import axios from "axios";
-
 function App() {
-  const [success, setSuccess] = React.useState<boolean | undefined>(undefined);
-  // const navigate = useNavigate();
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Bridges: any = {};
-  supportedChainIds().forEach((chainId: number) => {
-    // skip if we don't have an API for this chain
-    if (!(chainId in apis)) return;
-
-    Bridges[chainId] = new Bridge.SynapseBridge({
-      network: chainId,
-    });
-  });
+  const navigate = useNavigate();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = async (values: any, { setSubmitting }: any) => {
     setSubmitting(false);
-    // navigate(`/tx/${values.hash}`);
-    const kappa = makeKappa(values.hash);
-
-    // Set up the requests
-    const req = Object.keys(Bridges).map((chainId: string) => {
-      const { bridgeAddress: address } = Bridges[chainId];
-      const { url, apikey } = apis[chainId as keyof typeof apis];
-
-      return axios.get(url, {
-        params: {
-          module: "logs",
-          action: "getLogs",
-          address,
-          topic2: kappa,
-          apikey,
-        },
-      });
-    });
-    // wait for the requests to complete
-    const res = await Promise.all(req);
-    // post processing
-    const data = res.map((x) => x.data.result);
-    console.log("data", data);
-
-    setSuccess(data.some((x) => x.length > 0));
-  };
-  console.log("success", success);
-
-  const makeTable = () => {
-    // const tableValues = [
-    //   "Source Hash",
-    //   "Dest Hash",
-    //   "Source Chain",
-    //   "Dest Chain",
-    //   "From",
-    //   "To",
-    //   "Date",
-    //   "CoinType",
-    //   "Send Value",
-    //   "Receive Value",
-    //   "Status",
-    // ];
-    return (
-      <UnorderedList mt={10}>
-        <ListItem className="tableListItem">
-          <span className="label">Source Hash</span>
-          <span className="value">0xfff12123</span>
-        </ListItem>
-        <Divider />
-      </UnorderedList>
-    );
+    navigate(`/tx/${values.hash}`);
   };
 
   return (
-    <ChakraProvider>
-      <Container mt={20} maxW="container.md">
-        <Center mb={10}>
-          <Heading size="4xl">Dendrite</Heading>
-        </Center>
-        <Formik initialValues={{ hash: "" }} onSubmit={onSubmit}>
-          {({ isSubmitting, errors, handleSubmit, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack spacing={4} align="flex-start">
-                <FormControl isInvalid={!!errors.hash && touched.hash}>
-                  <FormLabel htmlFor="hash">Transaction Hash</FormLabel>
-                  <Field
-                    as={Input}
-                    id="hash"
-                    name="hash"
-                    placeholder="Hash"
-                    size="lg"
-                    isDisabled={isSubmitting}
-                    validate={(value: string) => {
-                      let error;
-                      if (!/^0x([A-Fa-f0-9]{64})$/.test(value)) {
-                        error = "Invalid transaction hash";
-                      }
-                      return error;
-                    }}
-                  />
-                  <FormErrorMessage>{errors.hash}</FormErrorMessage>
-                </FormControl>
-                <Button type="submit" disabled={isSubmitting}>
-                  Submit
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
-        <p>{success?.toString()}</p>
-        {makeTable()}
-      </Container>
-    </ChakraProvider>
+    <Container mt={20} maxW="container.md">
+      <Center mb={10}>
+        <Heading size="4xl">Dendrite</Heading>
+      </Center>
+      <Formik initialValues={{ hash: "" }} onSubmit={onSubmit}>
+        {({ isSubmitting, errors, handleSubmit, touched }) => (
+          <form onSubmit={handleSubmit}>
+            <VStack spacing={4} align="flex-start">
+              <FormControl isInvalid={!!errors.hash && touched.hash}>
+                <FormLabel htmlFor="hash">Transaction Hash</FormLabel>
+                <Field
+                  as={Input}
+                  id="hash"
+                  name="hash"
+                  placeholder="Hash"
+                  size="lg"
+                  isDisabled={isSubmitting}
+                  validate={(value: string) => {
+                    let error;
+                    if (!/^0x([A-Fa-f0-9]{64})$/.test(value)) {
+                      error = "Invalid transaction hash";
+                    }
+                    return error;
+                  }}
+                />
+                <FormErrorMessage>{errors.hash}</FormErrorMessage>
+              </FormControl>
+              <Button type="submit" disabled={isSubmitting}>
+                Submit
+              </Button>
+            </VStack>
+          </form>
+        )}
+      </Formik>
+    </Container>
   );
 }
 

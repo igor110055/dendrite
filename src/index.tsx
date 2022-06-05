@@ -5,18 +5,21 @@ import App from "./App";
 import Tx from "./routes/Tx";
 import reportWebVitals from "./reportWebVitals";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="tx/:hash" element={<Tx />} />
-      </Routes>
-    </HashRouter>
+    <ChakraProvider>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="tx/:hash" element={<Tx />} />
+        </Routes>
+      </HashRouter>
+    </ChakraProvider>
   </React.StrictMode>
 );
 
