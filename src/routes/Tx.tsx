@@ -9,6 +9,7 @@ import {
   ListItem,
   Box,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { id as makeKappa } from "@ethersproject/hash";
@@ -61,6 +62,7 @@ const toChain = async (fromTxHash: string, toChainId: string) => {
       },
     })
   ).data.result;
+  console.log(result);
   return result.length > 0 ? result[0] : null;
 };
 
@@ -120,20 +122,18 @@ function Tx() {
       const to = (fromChainTx as any).args[0];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const toChainId = (fromChainTx as any).args[1].toString(10);
-      const date = fromChainTx.timeStamp;
-      console.log(date);
 
       // get data about transaction to chain
       const toChainTx = await toChain(hash, toChainId);
-      console.log(toChainTx);
 
       const arr = [
         ["Source Hash", hash],
-        ["Target Hash", toChainTx.transactionHash],
+        ["Target Hash", toChainTx ? toChainTx.transactionHash : "N/A"],
         ["Source Chain", Bridges[fromChainId as keyof typeof Bridges].name],
         ["Target Chain", Bridges[toChainId].name],
         ["From", from],
         ["To", to],
+        ["Status", toChainTx ? "Success" : "Pending"],
       ];
       setData(arr);
     })();
@@ -141,9 +141,8 @@ function Tx() {
   return (
     <Container mt={20} maxW="container.md">
       <p>This is the tx page</p>
-      <Box mt={20}>{makeTable(data ?? [])}</Box>
-      <Box mt={20}>{JSON.stringify(data)}</Box>
-      <Button color="primary" onClick={() => navigate("/")}>
+      <Box mt={20}>{data ? makeTable(data) : <Spinner />}</Box>
+      <Button color="primary" onClick={() => navigate("/")} mt={10}>
         Go back
       </Button>
     </Container>
