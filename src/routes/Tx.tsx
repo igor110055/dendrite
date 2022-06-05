@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import {
+  Link,
   Container,
   Divider,
   UnorderedList,
@@ -132,11 +133,34 @@ function Tx() {
       const arr = [
         [
           "Source Hash",
-          <Link to={`/`} key={hash}>
+          <Link
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            href={Bridges[fromChainId as any].humanUrl + "/tx/" + hash}
+            key={hash}
+            isExternal
+          >
             {hash}
           </Link>,
         ],
-        ["Target Hash", toChainTx ? toChainTx.transactionHash : "N/A"],
+        [
+          "Target Hash",
+          toChainTx ? (
+            <Link
+              href={
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                Bridges[toChainId as any].humanUrl +
+                "/tx/" +
+                toChainTx.transactionHash
+              }
+              key={hash}
+              isExternal
+            >
+              {toChainTx.transactionHash}
+            </Link>
+          ) : (
+            "N/A"
+          ),
+        ],
         ["Source Chain", Bridges[fromChainId as keyof typeof Bridges].name],
         ["Target Chain", Bridges[toChainId].name],
         ["From", from],

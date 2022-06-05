@@ -1,16 +1,19 @@
 {
 	"1": {
 		"name": "Ethereum Mainnet",
+		"humanUrl": "https://etherscan.io",
 		"url": "https://api.etherscan.io/api",
 		"apikey": "SBPV1CVRWU8ST415KNAHSYNFCF9N82UH1H"
 	},
 	"137": {
 		"name": "Polygon Mainnet",
+		"humanUrl": "https://polygonscan.com",
 		"url": "https://api.polygonscan.com/api",
 		"apikey": "AYNMI2A6KIY1GE8VGZTWS8261YT17E4MFN"
 	},
 	"43114": {
 		"name": "Avalanche C-Chain",
+		"humanUrl": "https://snowtrace.io",
 		"url": "https://api.snowtrace.io/api",
 		"apikey": "CF15YPHM49PCYN6FI8IH5KYB5V5WG1EM53"
 	}
