@@ -81,17 +81,6 @@ const makeTable = (arr: any, onSubmit: any) => {
   );
 };
 
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// function sortByKey(array: any, key: string) {
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   console.log(array);
-//   return array.sort(function (a: any, b: any) {
-//     const x = a[key];
-//     const y = b[key];
-//     return x < y ? -1 : x > y ? 1 : 0;
-//   });
-// }
-
 const getTxs = async (startIndex: number, endIndex: number) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Bridges: any = {};
@@ -121,8 +110,8 @@ const getTxs = async (startIndex: number, endIndex: number) => {
         module: "logs",
         action: "getLogs",
         topic0: topic0,
-        address,
-        apikey,
+        address: address, // "0x2796317b0fF8538F253012862c06787Adfb8cEb6", // : "0x2796317b0fF8538F253012862c06787Adfb8cEb6"
+        apikey: apikey,
       },
     });
   });
@@ -137,7 +126,6 @@ const getTxs = async (startIndex: number, endIndex: number) => {
     return x;
   });
 
-  // const dataSorted = sortByKey(dataConverted, "timeStamp");
   const sample = dataConverted.slice(startIndex, endIndex);
   const ret = await Promise.all(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
