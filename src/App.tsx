@@ -25,7 +25,15 @@ import { ethers } from "ethers";
 
 import chains from "./data/chains.json";
 
-import { Table, Thead, Tbody, Tr, Th, TableContainer } from "@chakra-ui/react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from "@chakra-ui/react";
 
 const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -46,17 +54,15 @@ const makeTable = (arr: any, onSubmit: any) => {
           {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             arr.map((item: any) => (
-              <>
-                <tr
-                  key={item.sourceHash}
-                  onClick={() => onSubmit({ hash: item.sourceHash })}
-                >
-                  <td>{item.sourceHash.slice(0, 10)}...</td>
-                  <td>{item.from.slice(0, 10)}...</td>
-                  <td>{item.sourceChain}</td>
-                  <td>{item.targetChain}</td>
-                </tr>
-              </>
+              <Tr
+                key={item.sourceHash}
+                onClick={() => onSubmit({ hash: item.sourceHash })}
+              >
+                <Td>{item.sourceHash.slice(0, 10)}...</Td>
+                <Td>{item.from.slice(0, 10)}...</Td>
+                <Td>{item.sourceChain}</Td>
+                <Td>{item.targetChain}</Td>
+              </Tr>
             ))
           }
         </Tbody>
