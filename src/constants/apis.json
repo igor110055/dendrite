@@ -4,6 +4,11 @@
 		"url": "https://api.etherscan.io/api",
 		"apikey": "SBPV1CVRWU8ST415KNAHSYNFCF9N82UH1H"
 	},
+	"137": {
+		"name": "Polygon Mainnet",
+		"url": "https://api.polygonscan.com/api",
+		"apikey": "AYNMI2A6KIY1GE8VGZTWS8261YT17E4MFN"
+	},
 	"43114": {
 		"name": "Avalanche C-Chain",
 		"url": "https://api.snowtrace.io/api",
