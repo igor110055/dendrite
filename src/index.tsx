@@ -14,7 +14,7 @@ root.render(
     <HashRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="tx" element={<Tx />} />
+        <Route path="tx/:hash" element={<Tx />} />
       </Routes>
     </HashRouter>
   </React.StrictMode>
