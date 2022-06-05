@@ -47,6 +47,7 @@ const makeTable = (arr: any) => {
   );
 };
 
+// Destination Chain
 const toChain = async (fromTxHash: string, toChainId: string) => {
   const kappa = makeKappa(fromTxHash);
   const { url, apikey, bridge } = Bridges[toChainId];
@@ -66,6 +67,7 @@ const toChain = async (fromTxHash: string, toChainId: string) => {
   return result.length > 0 ? result[0] : null;
 };
 
+// Original Chain
 const fromChain = async (txHash: string) => {
   const res = await Promise.all(
     Object.keys(Bridges).map((chainId: string) => {
@@ -95,7 +97,7 @@ const fromChain = async (txHash: string) => {
           x.topics[0] ===
           makeKappa("TokenDeposit(address,uint256,address,uint256)")
       );
-      console.log("log", log);
+      // console.log("log", log);
       return [Object.keys(Bridges)[i], data[i], iface.parseLog(log)];
     }
   }
@@ -149,3 +151,5 @@ function Tx() {
   );
 }
 export default Tx;
+
+export { fromChain, toChain };
