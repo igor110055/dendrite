@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -130,7 +130,12 @@ function Tx() {
       const toChainTx = await toChain(hash, toChainId);
 
       const arr = [
-        ["Source Hash", hash],
+        [
+          "Source Hash",
+          <Link to={`/`} key={hash}>
+            {hash}
+          </Link>,
+        ],
         ["Target Hash", toChainTx ? toChainTx.transactionHash : "N/A"],
         ["Source Chain", Bridges[fromChainId as keyof typeof Bridges].name],
         ["Target Chain", Bridges[toChainId].name],
@@ -142,7 +147,7 @@ function Tx() {
     })();
   }, []);
   return (
-    <Container mt={20} maxW="container.md">
+    <Container mt={20} maxW="container.lg">
       <Heading>Transaction</Heading>
       <Box mt={20}>{data ? makeTable(data) : <Spinner />}</Box>
       <Button color="primary" onClick={() => navigate("/")} mt={10}>
