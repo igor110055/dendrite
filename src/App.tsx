@@ -51,6 +51,7 @@ const makeTable = (arr: any, onSubmit: any) => {
             <Th>From</Th>
             <Th>Source Chain</Th>
             <Th>Target Chain</Th>
+            <Th>Date</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -65,6 +66,7 @@ const makeTable = (arr: any, onSubmit: any) => {
                 <Td>{item.from.slice(0, 10)}...</Td>
                 <Td>{item.sourceChain}</Td>
                 <Td>{item.targetChain}</Td>
+                <Td>{item.date}</Td>
               </Tr>
             ))
           }
@@ -78,6 +80,17 @@ const makeTable = (arr: any, onSubmit: any) => {
     </TableContainer>
   );
 };
+
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// function sortByKey(array: any, key: string) {
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   console.log(array);
+//   return array.sort(function (a: any, b: any) {
+//     const x = a[key];
+//     const y = b[key];
+//     return x < y ? -1 : x > y ? 1 : 0;
+//   });
+// }
 
 const getTxs = async (startIndex: number, endIndex: number) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -117,8 +130,15 @@ const getTxs = async (startIndex: number, endIndex: number) => {
   const res = await Promise.all(req);
   const data = res.map((x) => x.data.result);
 
-  const sample = data[0].slice(startIndex, endIndex);
-  console.log(sample);
+  // Convert hexadecimal to decimal
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dataConverted = data[0].map((x: any) => {
+    x.timeStamp = parseInt(x.timeStamp, 16) * 1000;
+    return x;
+  });
+
+  // const dataSorted = sortByKey(dataConverted, "timeStamp");
+  const sample = dataConverted.slice(startIndex, endIndex);
   const ret = await Promise.all(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     sample.map(async (x: any) => {
@@ -132,7 +152,6 @@ const getTxs = async (startIndex: number, endIndex: number) => {
       const sourceChain = chains.find(
         (x) => x.chainId === parseInt(fromChainId)
       );
-
       // const abiEncoding = x.data;
       // const typesArrayTokenDeposit = ["uint256", "address", "uint256"]; // chainId, token, amount
 
@@ -147,12 +166,14 @@ const getTxs = async (startIndex: number, endIndex: number) => {
       // console.log(sourceChain?.nativeCurrency.name);
       // console.log(amount * 1e-18);
 
+      const date = new Date(x.timeStamp).toString();
       const arr = {
         sourceHash: txHash,
         sourceChain: sourceChain?.name,
         targetChain: chains.find((x) => x.chainId === parseInt(toChainId))
           ?.name,
         from: from,
+        date: date,
       };
       return arr;
     })
@@ -178,12 +199,10 @@ function App() {
       for (let i = 0; i < 6; i++) {
         getTxs(2 * i, 2 * i + 1).then((x) => {
           fullArray = fullArray.concat(x);
-          console.log("fullArray", fullArray);
+          console.log("fullArray", fullArray); // printArray
         });
         await timer(1000);
       }
-      // alert("Copied to console log");
-      // console.log(fullArray);
       setTxs(fullArray);
     };
 
