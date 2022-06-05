@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import Tx from "./routes/Tx";
 import reportWebVitals from "./reportWebVitals";
 import { HashRouter, Routes, Route } from "react-router-dom";
 
@@ -13,7 +14,7 @@ root.render(
     <HashRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        {/* <Route path="/" element={<Tx />} /> */}
+        <Route path="tx" element={<Tx />} />
       </Routes>
     </HashRouter>
   </React.StrictMode>
